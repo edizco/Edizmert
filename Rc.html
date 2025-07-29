@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Venue Photo Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #eee;
+      margin: 0;
+      padding: 15px;
+    }
+    h1, h2 {
+      text-align: center;
+      margin: 10px 0;
+    }
+    h1 {
+      color: #f39c12;
+      font-size: 1.8em;
+    }
+    h2 {
+      color: #4CAF50;
+      font-size: 1.4em;
+      margin-top: 20px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    li {
+      background: #222;
+      margin: 6px 0;
+      padding: 10px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+    }
+    input[type="checkbox"] {
+      transform: scale(1.3);
+      margin-right: 10px;
+    }
+    label {
+      flex: 1;
+      font-size: 1em;
+    }
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+      li {
+        font-size: 0.95em;
+        padding: 8px;
+      }
+      input[type="checkbox"] {
+        transform: scale(1.2);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎯 Venue Photo Tracker</h1>
+
+  <h2>📸 Happy Hour</h2>
+  <ul id="happyList"></ul>
+
+  <h2>🕶 MOM Time</h2>
+  <ul id="momList"></ul>
+
+  <script>
+    const happyVenues = [
+      ["Lisa", "Gym"], ["Treble", "Music Studio"], ["Sophie", "Dance studio"], ["Emma", "Mitchell 400"],
+      ["Lorelai", "Bingham 1"], ["Bean", "Gym"], ["Moonshine", "Sage 121"], ["Ivy", "Woods 206"],
+      ["Aurora", "Woods 011"], ["Rose", "Art Studio"], ["Blair", "All around campus"], ["Gigi", "Gould 005"],
+      ["Petzl", "All around campus/grassy areas"], ["Finn", "Art Studio"], ["Nyx", "Woods 109"],
+      ["Elijah", "Mitchell 105"], ["Bonny", "Around the campus/MMR 2"], ["Aphex", "Art Studio"],
+      ["Arven", "Dome"], ["Verna", "Art Studio"], ["Toast", "Commons glass room"], ["Indigo", "Woods 202"],
+      ["Freyja", "Woods 010"], ["Sisi", "Art Studio"], ["Mila", "Art Studio"], ["Bubbles", "Commons table"],
+      ["Spade", "Around the campus/MMR 1"], ["Tammy", "Mitchell 202"], ["Sandy", "Art Studio"], ["Anakin", "Art Studio"]
+    ];
+
+    const momVenues = [
+      ["Lisa", "Gym"], ["Treble", "Music Studio"], ["Sophie", "Dance studio"], ["Emma", "Mitchell 400"],
+      ["Lorelai", "Bingham 1"], ["Bean", "Gym"], ["Moonshine", "Sage 121"], ["Ivy", "Woods 206"],
+      ["Aurora", "Woods 011"], ["Rose", "Art Studio"], ["Blair", "All around campus"], ["Gigi", "Gould 005"],
+      ["Petzl", "All around campus/grassy areas"], ["Finn", "Art Studio"], ["Nyx", "Woods 109"],
+      ["Elijah", "Mitchell 105"], ["Bonny", "Around the campus/MMR 2"], ["Aphex", "Art Studio"],
+      ["Arven", "Dome"], ["Verna", "Art Studio"], ["Toast", "Commons glass room"], ["Indigo", "Woods 202"],
+      ["Freyja", "Woods 010"], ["Sisi", "Art Studio"], ["Mila", "Art Studio"], ["Bubbles", "Commons table"],
+      ["Spade", "Around the campus/MMR 1"], ["Tammy", "Mitchell 202"], ["Sandy", "Art Studio"], ["Anakin", "Art Studio"]
+    ];
+
+    function renderList(listId, venues, prefix) {
+      const list = document.getElementById(listId);
+      list.innerHTML = '';
+      venues.forEach(([name, location], index) => {
+        const li = document.createElement('li');
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        const key = `${prefix}-${index}`;
+        checkbox.checked = localStorage.getItem(key) === 'true';
+        checkbox.onchange = () => localStorage.setItem(key, checkbox.checked);
+        const label = document.createElement('label');
+        label.innerHTML = `<strong>${name}</strong> – ${location}`;
+        li.appendChild(checkbox);
+        li.appendChild(label);
+        list.appendChild(li);
+      });
+    }
+
+    renderList('happyList', happyVenues, 'happy');
+    renderList('momList', momVenues, 'mom');
+  </script>
+
+</body>
+</html>
