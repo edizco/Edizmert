@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Venue Photo Checklist</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #eee;
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      color: #f39c12;
+    }
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .tab {
+      background: #333;
+      color: #eee;
+      border: none;
+      padding: 10px 20px;
+      margin: 0 5px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .tab.active {
+      background: #f39c12;
+      color: black;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: #222;
+      margin: 8px 0;
+      padding: 10px;
+      border-left: 5px solid #f39c12;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    label {
+      flex: 1;
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎯 Venue Photo Tracker</h1>
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('happy')">Happy Hour</button>
+    <button class="tab" onclick="switchTab('mom')">MOM Time</button>
+  </div>
+
+  <ul id="venueList"></ul>
+
+  <script>
+    const happyVenues = [
+      ["Lisa", "Gym"],
+      ["Treble", "Music Studio"],
+      ["Sophie", "Dance studio"],
+      ["Emma", "Mitchell 400"],
+      ["Lorelai", "Bingham 1"],
+      ["Bean", "Gym"],
+      ["Moonshine", "Sage 121"],
+      ["Ivy", "Woods 206"],
+      ["Aurora", "Woods 011"],
+      ["Rose", "Art Studio"],
+      ["Blair", "All around campus"],
+      ["Gigi", "Gould 005"],
+      ["Petzl", "All around campus/grassy areas"],
+      ["Finn", "Art Studio"],
+      ["Nyx", "Woods 109"],
+      ["Elijah", "Mitchell 105"],
+      ["Bonny", "Around the campus/MMR 2"],
+      ["Aphex", "Art Studio"],
+      ["Arven", "Dome"],
+      ["Verna", "Art Studio"],
+      ["Toast", "Commons glass room"],
+      ["Indigo", "Woods 202"],
+      ["Freyja", "Woods 010"],
+      ["Sisi", "Art Studio"],
+      ["Mila", "Art Studio"],
+      ["Bubbles", "Commons table"],
+      ["Spade", "Around the campus/MMR 1"],
+      ["Tammy", "Mitchell 202"],
+      ["Sandy", "Art Studio"],
+      ["Anakin", "Art Studio"]
+    ];
+
+    const momVenues = [
+      ["Lisa", "Gym"],
+      ["Treble", "Music Studio"],
+      ["Sophie", "Dance studio"],
+      ["Emma", "Mitchell 400"],
+      ["Lorelai", "Bingham 1"],
+      ["Bean", "Gym"],
+      ["Moonshine", "Sage 121"],
+      ["Ivy", "Woods 206"],
+      ["Aurora", "Woods 011"],
+      ["Rose", "Art Studio"],
+      ["Blair", "All around campus"],
+      ["Gigi", "Gould 005"],
+      ["Petzl", "All around campus/grassy areas"],
+      ["Finn", "Art Studio"],
+      ["Nyx", "Woods 109"],
+      ["Elijah", "Mitchell 105"],
+      ["Bonny", "Around the campus/MMR 2"],
+      ["Aphex", "Art Studio"],
+      ["Arven", "Dome"],
+      ["Verna", "Art Studio"],
+      ["Toast", "Commons glass room"],
+      ["Indigo", "Woods 202"],
+      ["Freyja", "Woods 010"],
+      ["Sisi", "Art Studio"],
+      ["Mila", "Art Studio"],
+      ["Bubbles", "Commons table"],
+      ["Spade", "Around the campus/MMR 1"],
+      ["Tammy", "Mitchell 202"],
+      ["Sandy", "Art Studio"],
+      ["Anakin", "Art Studio"]
+    ];
+
+    let currentTab = 'happy';
+
+    function switchTab(tab) {
+      currentTab = tab;
+      document.querySelectorAll(".tab").forEach(btn => btn.classList.remove("active"));
+      document.querySelector(`.tab:nth-child(${tab === 'happy' ? 1 : 2})`).classList.add("active");
+      render();
+    }
+
+    function render() {
+      const list = document.getElementById('venueList');
+      list.innerHTML = '';
+      const venues = currentTab === 'happy' ? happyVenues : momVenues;
+
+      venues.forEach(([name, location], index) => {
+        const li = document.createElement("li");
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        const key = `${currentTab}-venue-${index}`;
+        checkbox.checked = localStorage.getItem(key) === "true";
+        checkbox.onchange = () => {
+          localStorage.setItem(key, checkbox.checked);
+        };
+
+        const label = document.createElement("label");
+        label.setAttribute("for", key);
+        label.innerHTML = `<strong>${name}</strong> – ${location}`;
+
+        li.appendChild(checkbox);
+        li.appendChild(label);
+        list.appendChild(li);
+      });
+    }
+
+    render();
+  </script>
+
+</body>
+</html>
